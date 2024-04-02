@@ -29,7 +29,7 @@ public class Dealer extends Player{
      * Receives the copy of Player.cards list, adds the first card of Deck.cards to the copy,
      * removes that card from Deck.cards, then if the dealt card is an Ace, increments the
      * value of Player.numberOfAces, in other case increases the value of Player.sumWithoutAces
-     * by the value of the dealt card. Assigns Player.cards the value of its local copy with added dealt card.
+     * by the value of the dealt card. Assigns to Player.cards the value of its local copy with added dealt card.
      */
     public void dealSingleCard(Deck deck, Player player){
         ArrayList<Card> localCards = player.getCards();
@@ -94,7 +94,7 @@ public class Dealer extends Player{
     @Override
     public String formCardsInitial(){
 
-        return "Dealer: X " + this.getCards().get(1).getName();
+        return "Dealer: ? " + this.getCards().get(1).getName();
     }
     
 }
