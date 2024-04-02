@@ -403,6 +403,26 @@ public class Game {
     }
 
     /**
+     * Stores all the Players from Game.players whose sum of the hand is in particular range
+     * into the list and returns it.
+     * @param min - lower limit of the range
+     * @param max - higher limit of the range
+     * @return - list of Players whose sum of the hand is in particular range
+     */
+    public ArrayList<Player> getPlayersWithSum(int min, int max){
+
+        ArrayList<Player> result = new ArrayList<>();
+
+        for (Player player : this.players){
+
+            if (player.getTotalSum() >= min && player.getTotalSum() <= max){
+                result.add(player);
+            }
+        }
+        return result;
+    }
+
+    /**
      * Processes and displays the results of the game by accessing Player.totalSum field of all the Players.
      * If Dealer's hand value exceeds 21, displays the message that all the players with the hand<=21 win.
      * If Dealer's hand does not exceed 21, displays all the Players with hands higher or equal to the Dealer's.
