@@ -426,13 +426,12 @@ public class Game {
 
     /**
      * Processes and displays the results of the game by accessing Player.totalSum field of all the Players.
-     * If Dealer's hand value exceeds 21, displays the message that all the players with the hand<=21 win.
+     * If Dealer's hand value exceeds 21, displays the message that all the players with (hand <= 21) as winners.
      * If Dealer's hand does not exceed 21, displays all the Players with hands higher or equal to the Dealer's.
      * In case that there are no such hands, displays the message that the Dealer wins.
      */
     public void defineWinnersAndPrint(){
-
-
+        
         if (this.dealer.getTotalSum() > 21){
             displayMessage(null, this.dealer.getName() + " looses (Sum " + dealer.getTotalSum()
                     + ").", '/');
