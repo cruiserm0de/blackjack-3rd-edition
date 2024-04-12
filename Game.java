@@ -403,61 +403,64 @@ public class Game {
     }
 
     /**
+     * Stores lines prepared for the output consisting of names of the Players from Game.players
+     * whose sum of the hand is in particular range, listed cards of these Players and
+     * sums of their hands. Returns this list prepared for the output.
+     * @param min - lower limit of the range
+     * @param max - higher limit of the range
+     * @return - list of names of the Players whose sum of the hand is in particular range
+     */
+    public ArrayList<String> getPlayersWithSum(int min, int max){
+
+        ArrayList<String> result = new ArrayList<>();
+
+        for (int i = 0; i < this.players.size()-1; i++){
+
+            Player player = this.players.get(i);
+            if (player.getTotalSum() >= min && player.getTotalSum() <= max){
+                result.add(player.getName() + " : (" + player.formCardsMiddle() + ") (" + player.getTotalSum() + ")");
+            }
+        }
+        return result;
+    }
+
+    /**
      * Processes and displays the results of the game by accessing Player.totalSum field of all the Players.
-     * If Dealer's hand value exceeds 21, displays the message that all the players with the hand<=21 win.
+     * If Dealer's hand value exceeds 21, displays the message that all the players with (hand <= 21) as winners.
      * If Dealer's hand does not exceed 21, displays all the Players with hands higher or equal to the Dealer's.
      * In case that there are no such hands, displays the message that the Dealer wins.
      */
     public void defineWinnersAndPrint(){
-
+        
         if (this.dealer.getTotalSum() > 21){
             displayMessage(null, this.dealer.getName() + " looses (Sum " + dealer.getTotalSum()
-                    + "). All the Players with (hand <= 21) win!", '/');
+                    + ").", '/');
+            displayMessage(null, "WINNERS:", '/');
+            this.sleep();
+            displayMessage(getPlayersWithSum(4, 21), null, '\\');
+            return;
         }
 
-        else {
-            ArrayList<Player> winners = new ArrayList<>();
-            ArrayList<Player> ties = new ArrayList<>();
+        ArrayList<String> winners = getPlayersWithSum(this.dealer.getTotalSum()+1, 21);
+        ArrayList<String> ties = getPlayersWithSum(this.dealer.getTotalSum(), this.dealer.getTotalSum());
 
-            for (int i = 0; i < this.getPlayers().size() - 1; i++){
-
-                if (this.players.get(i).getTotalSum() > this.dealer.getTotalSum() && this.players.get(i).getTotalSum() <= 21){
-                    winners.add(this.players.get(i));
-                }
-                else if (this.players.get(i).getTotalSum() == this.dealer.getTotalSum()){
-                    ties.add(this.players.get(i));
-                }
-            }
-
-            if (winners.size() > 0){
-                ArrayList<String> results = new ArrayList<>();
-                displayMessage(null, "WINNERS:", '/');
-                this.sleep();
-                for (Player winner : winners){
-                    String line = winner.getName() + " : (";
-                    line += winner.formCardsMiddle() + ") (" + winner.getTotalSum() + ")";
-                    results.add(line);
-                }
-                displayMessage(results, null, '\\');
-            }
-
-            if (ties.size() > 0){
-                ArrayList<String> results = new ArrayList<>();
-                displayMessage(null, "PUSHES:", '/');
-                this.sleep();
-                for (Player winner : ties){
-                    String line = winner.getName() + " : (";
-                    line += winner.formCardsMiddle() + ") (" + winner.getTotalSum() + ")";
-                    results.add(line);
-                }
-                displayMessage(results, null, '\\');
-            }
-
-            else if (winners.size() == 0){
-                String message = this.dealer.getName() + " has the highest hand. " + this.dealer.getName() + " wins.";
-                displayMessage(null, message, '/');
-            }
+        if (winners.size() > 0){
+            displayMessage(null, "WINNERS:", '/');
+            this.sleep();
+            displayMessage(winners, null, '\\');
         }
+
+        if (ties.size() > 0){
+            displayMessage(null, "PUSHES:", '/');
+            this.sleep();
+            displayMessage(ties, null, '\\');
+        }
+
+        else if (winners.size() == 0){
+            String message = this.dealer.getName() + " has the highest hand. " + this.dealer.getName() + " wins.";
+            displayMessage(null, message, '/');
+        }
+
     }
 
 
